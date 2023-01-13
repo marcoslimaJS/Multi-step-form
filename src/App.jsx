@@ -22,12 +22,20 @@ export function App() {
 
 const Container = styled.div`
   max-width: 900px;
-  height: 1400px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 50px;
-  padding: 20px;
+  padding: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
   background: #FFF;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   display: grid;
   grid-template-columns: 1fr 2fr;
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    margin: 0px;
+    padding: 0px;
+    background: none;
+  }
 `

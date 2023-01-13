@@ -1,14 +1,24 @@
 import styled from "styled-components";
-import fotoBG from  '../assets/images/bg-sidebar-desktop.svg'
+import fotoBGDesktop from "../assets/images/bg-sidebar-desktop.svg";
+import fotoBGMobile from "../assets/images/bg-sidebar-mobile.svg";
 
 export const Container = styled.div`
-  background: url(${fotoBG}) no-repeat;
+  background: url(${fotoBGDesktop}) no-repeat;
   padding: 20px;
   min-width: 275px;
-`
+  @media (max-width: 900px) {
+    background: url(${fotoBGMobile}) no-repeat;
+    min-width: 0px;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding-bottom: 60px;
+  }
+`;
 
 export const ListItem = styled.div`
-  color: #FFF;
+  color: #fff;
   text-transform: uppercase;
   display: flex;
   gap: 20px;
@@ -18,17 +28,27 @@ export const ListItem = styled.div`
     font-size: 0.875rem;
     margin-bottom: 3px;
   }
-  h3  {
-    font-size: 0.950rem;
+  h3 {
+    font-size: 0.95rem;
     letter-spacing: 1.5px;
+  }
+`;
+
+export const ListItemText = styled.div`
+  @media (max-width: 900px) {
+    display: none;
   }
 `
 
 export const ListNumber = styled.div`
   display: inline-block;
-  border: 1px solid ${({active, index}) => active === index ? 'hsl(217, 100%, 97%)' : '#fff' };
-  background: ${({active, index}) => active === index ? ' hsl(206, 94%, 87%)' : '' };
-  color: ${({active, index}) => active === index ? '#000' : '' };
+  border: 1px solid
+    ${({ active, index }) =>
+      active === index ? "hsl(217, 100%, 97%)" : "#fff"};
+  background: ${({ active, index }) =>
+    active === index ? " hsl(206, 94%, 87%)" : ""};
+  color: ${({ active, index }) => (active === index ? "#000" : "")};
   border-radius: 50%;
   padding: 10px 15px;
-`
+  transition: 0.4s;
+`;

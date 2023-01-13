@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Container, ListItem, ListNumber } from "./SidebarStyle";
+import { Container, ListItem, ListItemText, ListNumber } from "./SidebarStyle";
 import { StepContenxt } from "../App";
 
 const items = [
@@ -30,10 +30,10 @@ const Sidebar = () => {
                 {index + 1}
               </ListNumber>
             </div>
-            <div>
+            <ListItemText>
               <p>Step {index + 1}</p>
               <h3>{text}</h3>
-            </div>
+            </ListItemText>
           </ListItem>
         );
       })}

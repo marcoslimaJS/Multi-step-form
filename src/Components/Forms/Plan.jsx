@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import ArcadeSVG from "../Svgs/ArcadeSvg";
 import AdvancedSVG from "../Svgs/AdvancedSvg";
 import ProSVG from "../Svgs/ProSvg";
 import SwitchButton from "../SwitchButton";
+import { PlanContext } from "../FormStep";
 
 const planData = [
   {
-    name: "Arcade",
+    name: "arcade",
     price: {
       monthly: "$9/mo",
       yearly: "$90/yr",
@@ -15,7 +16,7 @@ const planData = [
     SVG: ArcadeSVG,
   },
   {
-    name: "Advanced",
+    name: "advanced",
     price: {
       monthly: "$12/mo",
       yearly: "$120/yr",
@@ -23,7 +24,7 @@ const planData = [
     SVG: AdvancedSVG,
   },
   {
-    name: "Pro",
+    name: "pro",
     price: {
       monthly: "$15/mo",
       yearly: "$150/yr",
@@ -33,16 +34,11 @@ const planData = [
 ];
 
 const Plan = () => {
-  const [billing, setBilling] = useState(false);
-  const [planCurrent, setPlanCurrent] = useState({
-    plan: planData[0].name,
-    price: planData[0].price.monthly,
-    duration: 'monthly'
-  });
+  const { planCurrent, setPlanCurrent, billing, setBilling } = useContext(PlanContext);
   const planOptionsInput = useRef({});
 
   const handlePlan = (value, price) => {
-    const duration = billing ? 'yearly' : 'monthly'
+    const duration = billing ? 'yearly' : 'monthly';
     setPlanCurrent({ plan: value, price, duration });
   }
 
@@ -50,7 +46,8 @@ const Plan = () => {
     const { value, dataset } = target;
     handlePlan(value, dataset.price)
   };
-
+  console.log(planCurrent)
+  
   useEffect(() => {
     const {value, dataset} = planOptionsInput.current[planCurrent.plan]
     handlePlan(value, dataset.price)
@@ -106,6 +103,7 @@ const PlanLabel = styled.label`
   h3 {
     font-size: 1rem;
     margin-bottom: 3px;
+    text-transform: capitalize;
   }
   span {
     font-size: 0.875rem;
@@ -131,6 +129,15 @@ const FreeMonth = styled.p`
 `;
 
 const Container = styled.div`
+  opacity: 0;
+  transform: translate3d(-30px, 0 , 0);
+  animation: anima 0.5s forwards;
+  @keyframes anima {
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0 , 0);
+    }
+  }
   ul {
     display: flex;
     gap: 20px;

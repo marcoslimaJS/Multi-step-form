@@ -26,13 +26,12 @@ export const validate = ({ type, value }, funcSetError) => {
   }
 };
 
-
 const Personal = () => {
-  const {form, setForm, error, setError} = useContext(PersonalContext);
+  const { form, setForm, error, setError } = useContext(PersonalContext);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    if(error?.[name]) {
+    if (error?.[name]) {
       validate({ type: name, value }, setError);
     }
     setForm((prevState) => ({ ...prevState, [name]: value }));
@@ -74,7 +73,7 @@ const Personal = () => {
         placeholder="e.g. stephenking@lorem.com"
         state={error?.email}
       />
-      
+
       <Label htmlFor="phone">
         Phone Number
         {error?.phone && <span>{error.phone}</span>}
@@ -97,7 +96,7 @@ export default Personal;
 
 const Input = styled.input`
   color: hsl(213, 96%, 18%);
-  padding: 10px;
+  padding: 15px 15px;
   font-family: "Ubuntu", sans-serif;
   font-size: 1rem;
   font-weight: 500;
@@ -107,7 +106,13 @@ const Input = styled.input`
     ${({ state }) => (state ? "hsl(354, 84%, 57%)" : "hsl(231, 11%, 63%)")};
   :focus {
     outline: none;
-    border: 1px solid ${({ state }) => (state ? "hsl(354, 84%, 57%)" : "hsl(213, 96%, 18%)")};
+    border: 1px solid
+      ${({ state }) => (state ? "hsl(354, 84%, 57%)" : "hsl(213, 96%, 18%)")};
+  }
+  @media (max-width: 900px) {
+    &:last-child {
+      margin-bottom: 0px;
+  } 
   }
 `;
 
@@ -124,4 +129,13 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+  opacity: 0;
+  transform: translate3d(-30px, 0, 0);
+  animation: anima 0.5s forwards;
+  @keyframes anima {
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
 `;

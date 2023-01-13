@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
+import { AddOnsContext, PlanContext } from "../FormStep";
 import CheckMarkSvg from "../Svgs/CheckMarkSvg";
 
 const addOnsData = [
@@ -33,18 +34,26 @@ const addOnsData = [
 ];
 
 const AddOns = () => {
-  const [selectedAddOns, setSelectedAddOns] = useState([]);
+  const { selectedAddOns, setSelectedAddOns } = useContext(AddOnsContext);
+  const {
+    planCurrent: { duration },
+  } = useContext(PlanContext);
 
   const handleChange = ({ target }) => {
-    const {value, checked, dataset} = target;
-    if(checked) {
-      setSelectedAddOns(prevState => ([...prevState, { name: value, price: dataset.price}]))
+    const { value, checked, dataset } = target;
+    if (checked) {
+      setSelectedAddOns((prevState) => [
+        ...prevState,
+        { name: value, price: dataset.price },
+      ]);
     } else {
-      setSelectedAddOns(addOns => (addOns.filter(({name}) => name !== value)))
+      setSelectedAddOns((addOns) =>
+        addOns.filter(({ name }) => name !== value)
+      );
     }
-  }
+  };
 
-  console.log(selectedAddOns)
+  console.log(selectedAddOns);
 
   return (
     <Container>
@@ -52,7 +61,14 @@ const AddOns = () => {
         {addOnsData.map(({ name, description, price, id }) => {
           return (
             <AddOnsCheck key={id}>
-              <CheckboxInput type="checkbox" id={id} value={name} onChange={handleChange} data-price={price.monthly} />
+              <CheckboxInput
+                type="checkbox"
+                id={id}
+                value={name}
+                checked={selectedAddOns.some((addOns) => addOns.name === name)}
+                onChange={handleChange}
+                data-price={price[duration]}
+              />
               <Label htmlFor={id}>
                 <PseudoCheckbox>
                   <CheckMarkSvg />
@@ -61,7 +77,7 @@ const AddOns = () => {
                   <h3>{name}</h3>
                   <p>{description}</p>
                 </div>
-                <span>{price.monthly}</span>
+                <span>{price[duration]}</span>
               </Label>
             </AddOnsCheck>
           );
@@ -74,6 +90,15 @@ const AddOns = () => {
 export default AddOns;
 
 const Container = styled.div`
+  opacity: 0;
+  transform: translate3d(-30px, 0, 0);
+  animation: anima 0.5s forwards;
+  @keyframes anima {
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
   ul {
     display: flex;
     flex-direction: column;

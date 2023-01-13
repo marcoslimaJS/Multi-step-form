@@ -28,10 +28,13 @@ const steps = [
 ];
 
 export const PersonalContext = createContext();
+export const AddOnsContext = createContext();
+export const PlanContext = createContext();
 
 const FormStep = () => {
   const { currentStep, setCurrentStep } = useContext(StepContenxt);
 
+  // states of forms -----------------------------------------------------
   const [personalForm, setPersonalForm] = useState({
     name: "",
     email: "",
@@ -42,6 +45,15 @@ const FormStep = () => {
     email: null,
     phone: null,
   });
+  const [planCurrent, setPlanCurrent] = useState({
+    plan: "arcade",
+    price: "$9/mo",
+    duration: "monthly",
+  });
+  const [planBilling, setPlanBilling] = useState(false);
+  const [selectedAddOns, setSelectedAddOns] = useState([]);
+
+  // -----------------------------------------------------------------------
 
   const arrayOfValidations = () => {
     const results = [];
@@ -54,24 +66,20 @@ const FormStep = () => {
   };
 
   const nextStep = () => {
-    if(currentStep !== steps.length - 1)  {
-      setCurrentStep(step => step + 1)
+    if (currentStep !== steps.length - 1) {
+      setCurrentStep((step) => step + 1);
     }
   };
 
   const previousStep = () => {
-    console.log(currentStep)
-    if(currentStep !== 0)  {
-      console.log('foi')
-      setCurrentStep(step => step - 1)
+    if (currentStep !== 0) {
+      setCurrentStep((step) => step - 1);
     }
-    console.log(currentStep)
   };
-  
 
   useEffect(() => {
-    console.log(`useEffect: ${currentStep}`)
-  },[currentStep])
+    console.log(`useEffect: ${currentStep}`);
+  }, [currentStep]);
 
   function teste(e) {
     e.preventDefault();
@@ -87,10 +95,6 @@ const FormStep = () => {
 
   return (
     <Container>
-      <Head>
-        <h1>{steps[currentStep].title}</h1>
-        <p>{steps[currentStep].description}</p>
-      </Head>
       <PersonalContext.Provider
         value={{
           form: personalForm,
@@ -99,15 +103,37 @@ const FormStep = () => {
           setError: setErrorPersonal,
         }}
       >
-        <form onSubmit={teste}>
-          <ContentForm />
-          <ContainerButtons>
-            {currentStep < steps.length - 1 && currentStep !== 0 &&(
-              <BackButton onClick={previousStep}>Go Back</BackButton>
-            )}
-            <Button type="submit">Next Step</Button>
-          </ContainerButtons>
-        </form>
+        <AddOnsContext.Provider
+          value={{
+            selectedAddOns: selectedAddOns,
+            setSelectedAddOns: setSelectedAddOns,
+          }}
+        >
+          <PlanContext.Provider
+            value={{
+              planCurrent: planCurrent,
+              setPlanCurrent: setPlanCurrent,
+              billing: planBilling,
+              setBilling: setPlanBilling,
+            }}
+          >
+            <form onSubmit={teste}>
+              <FormContent>
+                <Head>
+                  <h1>{steps[currentStep].title}</h1>
+                  <p>{steps[currentStep].description}</p>
+                </Head>
+                <ContentForm />
+              </FormContent>
+              <ContainerButtons>
+                {currentStep < steps.length && currentStep !== 0 && (
+                  <BackButton onClick={previousStep}>Go Back</BackButton>
+                )}
+                <Button type="submit">Next Step</Button>
+              </ContainerButtons>
+            </form>
+          </PlanContext.Provider>
+        </AddOnsContext.Provider>
       </PersonalContext.Provider>
     </Container>
   );
@@ -118,6 +144,9 @@ export default FormStep;
 const Container = styled.div`
   padding: 40px 60px;
   color: hsl(213, 96%, 18%);
+  @media (max-width: 900px) {
+    padding: 0px;
+  }
 `;
 
 const Head = styled.div`
@@ -130,31 +159,47 @@ const Head = styled.div`
   }
 `;
 
+const FormContent = styled.div`
+  @media (max-width: 900px) {
+    padding: 20px;
+    background: #FFF; 
+    border-radius: 10px;
+    margin: -70px 30px 80px 30px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+`;
+
 const ContainerButtons = styled.div`
   display: flex;
   align-items: center;
+  @media (max-width: 900px) {
+    background: #FFF;
+    padding: 20px;
+  }
 `;
 
-const BackButton = styled.button`
+const BackButton = styled.span`
   background: none;
   color: hsl(231, 11%, 63%);
   border: none;
   font-size: 1rem;
   font-weight: 600;
-`
+  cursor: pointer;
+`;
 
 const Button = styled.button`
   background: hsl(213, 96%, 18%);
   color: #fff;
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 600;
   font-family: "Ubuntu", sans-serif;
   border: none;
-  border-radius: 5px;
-  padding: 15px 30px;
+  border-radius: 10px;
+  padding: 15px 25px;
   transition: 0.3s ease-in-out;
   display: flex;
   margin-left: auto;
+  cursor: pointer;
   :hover {
     background: #124585;
   }
