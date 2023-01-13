@@ -4,7 +4,7 @@ import fotoBG from  '../assets/images/bg-sidebar-desktop.svg'
 export const Container = styled.div`
   background: url(${fotoBG}) no-repeat;
   padding: 20px;
-  height: 500px;
+  min-width: 275px;
 `
 
 export const ListItem = styled.div`

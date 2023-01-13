@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import ArcadeSVG from "../Svgs/ArcadeSvg";
 import AdvancedSVG from "../Svgs/AdvancedSvg";
@@ -7,7 +7,7 @@ import SwitchButton from "../SwitchButton";
 
 const planData = [
   {
-    title: "Arcade",
+    name: "Arcade",
     price: {
       monthly: "$9/mo",
       yearly: "$90/yr",
@@ -15,7 +15,7 @@ const planData = [
     SVG: ArcadeSVG,
   },
   {
-    title: "Advanced",
+    name: "Advanced",
     price: {
       monthly: "$12/mo",
       yearly: "$120/yr",
@@ -23,7 +23,7 @@ const planData = [
     SVG: AdvancedSVG,
   },
   {
-    title: "Pro",
+    name: "Pro",
     price: {
       monthly: "$15/mo",
       yearly: "$150/yr",
@@ -35,33 +35,47 @@ const planData = [
 const Plan = () => {
   const [billing, setBilling] = useState(false);
   const [planCurrent, setPlanCurrent] = useState({
-    plan: planData[0].title,
-    price: planData[0].price.monthly
+    plan: planData[0].name,
+    price: planData[0].price.monthly,
+    duration: 'monthly'
   });
+  const planOptionsInput = useRef({});
+
+  const handlePlan = (value, price) => {
+    const duration = billing ? 'yearly' : 'monthly'
+    setPlanCurrent({ plan: value, price, duration });
+  }
 
   const handleChange = ({ target }) => {
     const { value, dataset } = target;
-    const currentPrice = billing ? 'yearly' : 'monthly';
-    setPlanCurrent({plan:value, price: dataset.price})
-  }
+    handlePlan(value, dataset.price)
+  };
 
   useEffect(() => {
-    console.log('atualizar plano')
+    const {value, dataset} = planOptionsInput.current[planCurrent.plan]
+    handlePlan(value, dataset.price)
   }, [billing])
-
-  console.log(planCurrent)
 
   return (
     <Container>
       <ul>
-        {planData.map(({ title, SVG, price: { monthly, yearly } }) => {
+        {planData.map(({ name, SVG, price: { monthly, yearly } }) => {
           return (
-            <PlanRadio key={title}>
-              <InputRadio type="radio" id={title} name="plan" value={title}  checked={planCurrent.plan === title} onChange={handleChange} data-price={billing ? yearly : monthly}/>
-              <PlanLabel htmlFor={title}>
+            <PlanRadio key={name}>
+              <InputRadio
+                type="radio"
+                id={name}
+                name="plan"
+                value={name}
+                checked={planCurrent.plan === name}
+                onChange={handleChange}
+                data-price={billing ? yearly : monthly}
+                ref={(el) => {planOptionsInput.current[name] = el}}
+              />
+              <PlanLabel htmlFor={name}>
                 <SVG />
                 <div>
-                  <h3>{title}</h3>
+                  <h3>{name}</h3>
                   <span>{billing ? yearly : monthly}</span>
                   {billing && <FreeMonth>2 months free</FreeMonth>}
                 </div>

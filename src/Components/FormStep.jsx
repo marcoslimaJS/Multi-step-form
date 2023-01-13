@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext } from "react";
+import React, { useState, createContext, useContext, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import ContentForm from "./ContentForm";
 import { validate } from "./Forms/Personal";
@@ -30,32 +30,58 @@ const steps = [
 export const PersonalContext = createContext();
 
 const FormStep = () => {
-  const { currentStep, setCurrentStep } = useContext(StepContenxt)
+  const { currentStep, setCurrentStep } = useContext(StepContenxt);
 
   const [personalForm, setPersonalForm] = useState({
     name: "",
     email: "",
     phone: "",
-  })
+  });
   const [errorPersonal, setErrorPersonal] = useState({
     name: null,
     email: null,
     phone: null,
-  })
+  });
 
   const arrayOfValidations = () => {
-    const results = []
+    const results = [];
     for (let type in personalForm) {
-      results.push(validate({type, value: personalForm[type]}, setErrorPersonal))
+      results.push(
+        validate({ type, value: personalForm[type] }, setErrorPersonal)
+      );
     }
-    return results.every(result => result === true)
-  }
+    return results.every((result) => result === true);
+  };
+
+  const nextStep = () => {
+    if(currentStep !== steps.length - 1)  {
+      setCurrentStep(step => step + 1)
+    }
+  };
+
+  const previousStep = () => {
+    console.log(currentStep)
+    if(currentStep !== 0)  {
+      console.log('foi')
+      setCurrentStep(step => step - 1)
+    }
+    console.log(currentStep)
+  };
+  
+
+  useEffect(() => {
+    console.log(`useEffect: ${currentStep}`)
+  },[currentStep])
 
   function teste(e) {
     e.preventDefault();
-    const validated = arrayOfValidations()
-    if(validated) {
-      setCurrentStep(currentStep + 1);
+    if (currentStep === 0) {
+      const validated = arrayOfValidations();
+      if (validated) {
+        nextStep();
+      }
+    } else {
+      nextStep();
     }
   }
 
@@ -65,10 +91,22 @@ const FormStep = () => {
         <h1>{steps[currentStep].title}</h1>
         <p>{steps[currentStep].description}</p>
       </Head>
-      <PersonalContext.Provider value={{form: personalForm, setForm: setPersonalForm, error: errorPersonal, setError: setErrorPersonal}} >
+      <PersonalContext.Provider
+        value={{
+          form: personalForm,
+          setForm: setPersonalForm,
+          error: errorPersonal,
+          setError: setErrorPersonal,
+        }}
+      >
         <form onSubmit={teste}>
           <ContentForm />
-          <Button type="submit">Next Step</Button>
+          <ContainerButtons>
+            {currentStep < steps.length - 1 && currentStep !== 0 &&(
+              <BackButton onClick={previousStep}>Go Back</BackButton>
+            )}
+            <Button type="submit">Next Step</Button>
+          </ContainerButtons>
         </form>
       </PersonalContext.Provider>
     </Container>
@@ -91,6 +129,19 @@ const Head = styled.div`
     color: hsl(231, 11%, 63%);
   }
 `;
+
+const ContainerButtons = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const BackButton = styled.button`
+  background: none;
+  color: hsl(231, 11%, 63%);
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+`
 
 const Button = styled.button`
   background: hsl(213, 96%, 18%);

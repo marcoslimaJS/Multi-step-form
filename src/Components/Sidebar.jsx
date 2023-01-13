@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Container, ListItem, ListNumber } from "./MeneuStyle";
+import { Container, ListItem, ListNumber } from "./SidebarStyle";
 import { StepContenxt } from "../App";
 
 const items = [
@@ -17,7 +17,7 @@ const items = [
   },
 ];
 
-const MenuList = () => {
+const Sidebar = () => {
   const { currentStep } = useContext(StepContenxt)
 
   return (
@@ -41,4 +41,4 @@ const MenuList = () => {
   );
 };
 
-export default MenuList;
+export default Sidebar;

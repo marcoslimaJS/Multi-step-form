@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 import styled from "styled-components";
 import FormStep from "./Components/FormStep";
-import MenuList from "./Components/MenuList";
+import Sidebar from "./Components/Sidebar";
 import GlobalStyle from './styles/Global';
 
 export const StepContenxt = createContext();
@@ -12,7 +12,7 @@ export function App() {
     <Container>
       <GlobalStyle />
       <StepContenxt.Provider value={{currentStep: currentStep, setCurrentStep: setCurrentStep}}>
-        <MenuList />
+        <Sidebar />
         <FormStep />
       </StepContenxt.Provider>
     </Container>
