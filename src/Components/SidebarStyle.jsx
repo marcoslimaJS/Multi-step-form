@@ -11,6 +11,7 @@ export const Container = styled.div`
     background: url(${fotoBGMobile}) no-repeat;
     min-width: 0px;
     min-height: 0px;
+    height: 150px;
     background-size: cover;
     display: flex;
     justify-content: center;
