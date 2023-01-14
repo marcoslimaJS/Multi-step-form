@@ -112,7 +112,10 @@ const Input = styled.input`
   @media (max-width: 900px) {
     &:last-child {
       margin-bottom: 0px;
-  } 
+    }
+    @media (max-width: 500px) {
+      padding: 10px;
+    }
   }
 `;
 
@@ -122,6 +125,10 @@ const Label = styled.label`
   margin-bottom: 10px;
   span {
     color: hsl(354, 84%, 57%);
+  }
+  @media (max-width: 500px) {
+    font-size: 0.875rem;
+    margin-bottom: 5px;
   }
 `;
 

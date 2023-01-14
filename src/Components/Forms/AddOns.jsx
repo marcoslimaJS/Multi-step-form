@@ -132,6 +132,20 @@ const Label = styled.label`
     font-weight: 500;
     margin-left: auto;
   }
+  @media (max-width: 460px) {
+    padding: 15px;
+    gap: 15px;
+    h3 {
+      margin-bottom: 2px;
+      font-size: 0.900rem;
+    }
+    p {
+      font-size: 0.800rem;
+    }
+    span {
+      font-size: 0.800rem;
+    }
+  }
 `;
 
 const PseudoCheckbox = styled.div`
@@ -142,6 +156,10 @@ const PseudoCheckbox = styled.div`
   height: 25px;
   border-radius: 5px;
   border: 1px solid hsl(231, 11%, 63%);
+  @media (max-width: 460px) {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 const AddOnsCheck = styled.div`

@@ -6,14 +6,19 @@ export const Container = styled.div`
   background: url(${fotoBGDesktop}) no-repeat;
   padding: 20px;
   min-width: 275px;
+  min-height: 570px;
   @media (max-width: 900px) {
     background: url(${fotoBGMobile}) no-repeat;
     min-width: 0px;
+    min-height: 0px;
     background-size: cover;
     display: flex;
     justify-content: center;
     gap: 30px;
     padding-bottom: 60px;
+  }
+  @media (max-width: 500px) {
+    gap: 15px;
   }
 `;
 
@@ -50,5 +55,5 @@ export const ListNumber = styled.div`
   color: ${({ active, index }) => (active === index ? "#000" : "")};
   border-radius: 50%;
   padding: 10px 15px;
-  transition: 0.4s;
+  transition: 0.5s;
 `;

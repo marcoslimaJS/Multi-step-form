@@ -109,6 +109,9 @@ const PlanLabel = styled.label`
     font-size: 0.875rem;
     color: hsl(231, 11%, 63%);
   }
+  @media (max-width: 565px) {
+    flex-direction: row;
+  }
 `;
 
 const InputRadio = styled.input`
@@ -120,6 +123,13 @@ const PlanRadio = styled.div`
   input[type="radio"]:checked + label {
     border-color: hsl(213, 96%, 18%);
     background: hsl(217, 100%, 97%);
+  }
+  @media (max-width: 900px) {
+   min-width: 200px ;
+  }
+  @media (max-width: 750px) {
+    min-width: 0px;
+    min-height: 100px;
   }
 `;
 
@@ -142,6 +152,17 @@ const Container = styled.div`
     display: flex;
     gap: 20px;
     margin-bottom: 20px;
+  }
+  @media (max-width: 900px) {
+    min-height: 255px;
+    ul {
+      justify-content: space-between;
+    } 
+  }
+  @media (max-width: 565px) {
+    ul {
+      flex-direction: column;
+    }
   }
 `;
 

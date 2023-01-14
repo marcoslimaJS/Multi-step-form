@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components";
 import ContentForm from "./ContentForm";
 import { validate } from "./Forms/Personal";
 import { StepContenxt } from "../App";
+import ThankYouForm from "./Forms/ThankYouForm";
 
 const steps = [
   {
@@ -54,6 +55,7 @@ const FormStep = () => {
   const [selectedAddOns, setSelectedAddOns] = useState([]);
 
   // -----------------------------------------------------------------------
+  const [thankYou, setThankYou] = useState(false);
 
   const arrayOfValidations = () => {
     const results = [];
@@ -81,8 +83,8 @@ const FormStep = () => {
     console.log(`useEffect: ${currentStep}`);
   }, [currentStep]);
 
-  function teste(e) {
-    e.preventDefault();
+  const checkForm = () => {
+    console.log("foiiii");
     if (currentStep === 0) {
       const validated = arrayOfValidations();
       if (validated) {
@@ -91,7 +93,13 @@ const FormStep = () => {
     } else {
       nextStep();
     }
-  }
+  };
+
+  const sendForm = (e) => {
+    e.preventDefault();
+    setThankYou((prev) => prev = true);
+    console.log("enviado");
+  };
 
   return (
     <Container>
@@ -117,20 +125,31 @@ const FormStep = () => {
               setBilling: setPlanBilling,
             }}
           >
-            <form onSubmit={teste}>
+            <form onSubmit={sendForm}>
               <FormContent>
-                <Head>
-                  <h1>{steps[currentStep].title}</h1>
-                  <p>{steps[currentStep].description}</p>
-                </Head>
-                <ContentForm />
-              </FormContent>
-              <ContainerButtons>
-                {currentStep < steps.length && currentStep !== 0 && (
-                  <BackButton onClick={previousStep}>Go Back</BackButton>
+                {!thankYou && (
+                  <>
+                    <Head>
+                      <h1>{steps[currentStep].title}</h1>
+                      <p>{steps[currentStep].description}</p>
+                    </Head>
+                    <ContentForm />
+                  </>
                 )}
-                <Button type="submit">Next Step</Button>
-              </ContainerButtons>
+                {thankYou && <ThankYouForm />}
+              </FormContent>
+              {!thankYou && (
+                <ContainerButtons>
+                  {currentStep < steps.length && currentStep !== 0 && (
+                    <BackButton onClick={previousStep}>Go Back</BackButton>
+                  )}
+                  {currentStep !== steps.length - 1 ? (
+                    <ButtonDefault onClick={checkForm}>Next Step</ButtonDefault>
+                  ) : (
+                    <ButtonConfirm>Confirm</ButtonConfirm>
+                  )}
+                </ContainerButtons>
+              )}
             </form>
           </PlanContext.Provider>
         </AddOnsContext.Provider>
@@ -157,23 +176,40 @@ const Head = styled.div`
   p {
     color: hsl(231, 11%, 63%);
   }
+  @media (max-width: 500px) {
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+  @media (max-width: 400px) {
+    p {
+      max-width: 30ch;
+    }
+  }
 `;
 
 const FormContent = styled.div`
   @media (max-width: 900px) {
     padding: 20px;
-    background: #FFF; 
+    background: #FFF;
     border-radius: 10px;
     margin: -70px 30px 80px 30px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+  @media (max-width: 500px) {
+    margin: -70px 15px 80px 15px;
   }
 `;
 
 const ContainerButtons = styled.div`
   display: flex;
   align-items: center;
+  margin-top: auto;
   @media (max-width: 900px) {
-    background: #FFF;
+    background: #fff;
+    padding: 20px 30px;
+  }
+  @media (max-width: 500px) {
     padding: 20px;
   }
 `;
@@ -187,14 +223,14 @@ const BackButton = styled.span`
   cursor: pointer;
 `;
 
-const Button = styled.button`
+const ButtonDefault = styled.span`
   background: hsl(213, 96%, 18%);
   color: #fff;
   font-size: 1rem;
   font-weight: 600;
   font-family: "Ubuntu", sans-serif;
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 15px 25px;
   transition: 0.3s ease-in-out;
   display: flex;
@@ -202,5 +238,27 @@ const Button = styled.button`
   cursor: pointer;
   :hover {
     background: #124585;
+  }
+  @media (max-width: 500px) {
+    padding: 15px 20px;
+    font-size: 0.875rem;
+  }
+`;
+
+const ButtonConfirm = styled.button`
+  background: hsl(243, 100%, 62%);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: "Ubuntu", sans-serif;
+  border: none;
+  border-radius: 5px;
+  padding: 15px 25px;
+  transition: 0.3s ease-in-out;
+  display: flex;
+  margin-left: auto;
+  cursor: pointer;
+  :hover {
+    background: hsl(243.03370786516854, 84.76190476190476%, 41.17647058823529%);
   }
 `;

@@ -73,6 +73,9 @@ const Container = styled.div`
       transform: translate3d(0, 0, 0);
     }
   }
+  @media (max-width: 900px) {
+    min-height: 280px;
+  }
 `;
 const Products = styled.div`
   background: hsl(217, 100%, 97%);
@@ -89,11 +92,20 @@ const Plan = styled.div`
   h3 {
     font-size: 1.2rem;
     margin-bottom: 3px;
+    text-transform: capitalize;
   }
   p {
     color: hsl(231, 11%, 63%);
     text-decoration: underline;
     cursor: pointer;
+  }
+  span {
+    font-weight: 600;
+  }
+  @media (max-width: 400px) {
+    h3 {
+      font-size: 1rem;
+    }
   }
 `;
 
@@ -104,6 +116,11 @@ const AddOns = styled.div`
   align-items: center;
   p {
     color: hsl(231, 11%, 63%);
+  }
+  @media (max-width: 400px) {
+    p, span {
+      font-size: 0.875rem;
+    }
   }
 `;
 
@@ -119,5 +136,8 @@ const Total = styled.div`
     color: hsl(243, 100%, 62%);
     font-size: 1.2rem;
     font-weight: 700;
+  }
+  @media (max-width: 900px) {
+    margin-top: auto;
   }
 `;
