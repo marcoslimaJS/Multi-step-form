@@ -73,9 +73,6 @@ const Container = styled.div`
       transform: translate3d(0, 0, 0);
     }
   }
-  @media (max-width: 900px) {
-    min-height: 280px;
-  }
 `;
 const Products = styled.div`
   background: hsl(217, 100%, 97%);

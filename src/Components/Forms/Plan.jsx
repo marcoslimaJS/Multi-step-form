@@ -154,7 +154,6 @@ const Container = styled.div`
     margin-bottom: 20px;
   }
   @media (max-width: 900px) {
-    min-height: 255px;
     ul {
       justify-content: space-between;
     } 

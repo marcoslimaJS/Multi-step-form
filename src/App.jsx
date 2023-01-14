@@ -33,10 +33,11 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr;
   @media (max-width: 900px) {
-    grid-template-columns: 1fr;
+    display: block;
     margin: 0px;
     padding: 0px;
-    background: none;
     box-shadow: none;
+    background: hsl(217, 100%, 97%);
+    height: 100vh;
   }
 `

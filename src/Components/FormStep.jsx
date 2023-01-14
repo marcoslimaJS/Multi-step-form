@@ -97,7 +97,7 @@ const FormStep = () => {
 
   const sendForm = (e) => {
     e.preventDefault();
-    setThankYou((prev) => prev = true);
+    setThankYou((prev) => (prev = true));
     console.log("enviado");
   };
 
@@ -163,8 +163,15 @@ export default FormStep;
 const Container = styled.div`
   padding: 40px 60px;
   color: hsl(213, 96%, 18%);
+  height: 100%;
   @media (max-width: 900px) {
     padding: 0px;
+    form {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
   }
 `;
 
@@ -192,6 +199,7 @@ const FormContent = styled.div`
   @media (max-width: 900px) {
     padding: 20px;
     background: #FFF;
+    min-height: 400px;
     border-radius: 10px;
     margin: -70px 30px 80px 30px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
