@@ -53,7 +53,6 @@ const AddOns = () => {
     }
   };
 
-  console.log(selectedAddOns);
 
   return (
     <Container>

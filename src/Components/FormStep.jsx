@@ -79,12 +79,8 @@ const FormStep = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(`useEffect: ${currentStep}`);
-  }, [currentStep]);
 
   const checkForm = () => {
-    console.log("foiiii");
     if (currentStep === 0) {
       const validated = arrayOfValidations();
       if (validated) {
@@ -97,8 +93,7 @@ const FormStep = () => {
 
   const sendForm = (e) => {
     e.preventDefault();
-    setThankYou((prev) => (prev = true));
-    console.log("enviado");
+    setThankYou((prev) => prev = true);
   };
 
   return (

@@ -9,8 +9,6 @@ const Finishing = () => {
   const { setCurrentStep } = useContext(StepContenxt);
   const [totalValue, setTotalValue] = useState(0);
 
-  console.log(selectedAddOns);
-
   const getNumbers = (string) => {
     const numbers = string.replace(/[^0-9]/g, "");
     return parseInt(numbers);
@@ -25,8 +23,8 @@ const Finishing = () => {
       return (accum += getNumbers(price));
     }, 0);
     const pricePlan = getNumbers(planCurrent.price);
-    setTotalValue((prevPrice) => (prevPrice = totalAddOns + pricePlan));
-  }, [selectedAddOns, planCurrent]);
+    setTotalValue((prevPrice) => prevPrice = totalAddOns + pricePlan);
+  }, []);
 
   return (
     <Container>

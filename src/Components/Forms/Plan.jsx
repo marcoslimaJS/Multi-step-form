@@ -4,7 +4,7 @@ import ArcadeSVG from "../Svgs/ArcadeSvg";
 import AdvancedSVG from "../Svgs/AdvancedSvg";
 import ProSVG from "../Svgs/ProSvg";
 import SwitchButton from "../SwitchButton";
-import { PlanContext } from "../FormStep";
+import { AddOnsContext, PlanContext } from "../FormStep";
 
 const planData = [
   {
@@ -35,6 +35,7 @@ const planData = [
 
 const Plan = () => {
   const { planCurrent, setPlanCurrent, billing, setBilling } = useContext(PlanContext);
+    const { selectedAddOns, setSelectedAddOns } = useContext(AddOnsContext);
   const planOptionsInput = useRef({});
 
   const handlePlan = (value, price) => {
@@ -46,7 +47,6 @@ const Plan = () => {
     const { value, dataset } = target;
     handlePlan(value, dataset.price)
   };
-  console.log(planCurrent)
   
   useEffect(() => {
     const {value, dataset} = planOptionsInput.current[planCurrent.plan]
@@ -83,7 +83,7 @@ const Plan = () => {
       </ul>
       <BillingContainer>
         <span>Monthly</span>
-        <SwitchButton value={billing} setValue={setBilling} />
+        <SwitchButton value={billing} setValue={setBilling} clearAddOns={setSelectedAddOns} />
         <span>Yearly</span>
       </BillingContainer>
     </Container>

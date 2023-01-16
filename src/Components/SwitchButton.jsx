@@ -1,16 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 
-const SwitchButton = ({ value, setValue }) => {
+const SwitchButton = ({ value, setValue, clearAddOns }) => {
 
   const handleChange = ({ target }) => {
     setValue(target.checked)
   }
 
+  const handleClick = () => {
+    clearAddOns(prev => prev = [])
+  }
+
   return (
     <>
       <Label>
-        <Input type='checkbox' checked={value} onChange={handleChange} />
+        <Input type='checkbox' checked={value} onChange={handleChange} onClick={handleClick} />
         <Switch />
       </Label>
     </>

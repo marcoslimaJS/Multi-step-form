@@ -7,7 +7,6 @@ const regexEmail =
 const regexPhone = /^[+-]?(?=.)(?:\d+,)*\d*(?:\.\d+)?$/;
 
 export const validate = ({ type, value }, funcSetError) => {
-  console.log(type, value);
   if (value.length === 0) {
     funcSetError((prevState) => ({
       ...prevState,
