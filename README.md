@@ -30,7 +30,6 @@ Os usuários devem ser capazes de:
 ### O que eu aprendi
 
 Olá pessoal, esse foi o meu primeiro projeto utilizando a biblioteca React, pude colocar em pratica as vantagens dos react hooks trabalhando com componentes funcionais, tambem foi usado o styled components.
-Olá pessoal, esse foi o meu primeiro projeto utilizando a biblioteca React, pude colocar em pratica as vantagens dos react hooks trabalhando com componentes funcionais, tambem foi usado o styled components.
 
 
 ## Autor
